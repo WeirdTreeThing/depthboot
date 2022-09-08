@@ -205,6 +205,7 @@ def post_extract(username: str, password: str, hostname: str, rebind_search: boo
     Path("/mnt/eupnea/lib/modules").mkdir(parents=True, exist_ok=True)
     bash("tar xpf /tmp/eupnea-build/modules.tar.xz -C /mnt/eupnea/")  # the tar contains /lib/modules already
     if not distro == "ubuntu" and not de_name == "gnome":
+        chroot('pacman -S --noconfirm sudo')
         print("Configuring user")
         if not chroot("id " + username).find("no such user") == -1:
             chroot('useradd -mG wheel ' + username)
