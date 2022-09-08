@@ -207,9 +207,8 @@ def post_extract(username: str, password: str, hostname: str, rebind_search: boo
     if not distro == "ubuntu" and not de_name == "gnome":
         print("Configuring user")
         if not chroot("id " + username).find("no such user") == -1:
-            chroot('useradd --create-home --comment "" ' + username)
+            chroot('useradd -mG wheel ' + username)
             chroot('echo "' + username + ':' + password + '" | chpasswd')
-            chroot("usermod -aG sudo " + username)
         else:
             print("User already exists, skipping")
     print("Setting hostname")
